@@ -1,4 +1,4 @@
-package models;
+package com.authAPI.AuthAPI.models;
 
 import jakarta.persistence.*;
 

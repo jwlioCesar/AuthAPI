@@ -1,6 +1,6 @@
-package repositories;
+package com.authAPI.AuthAPI.repositories;
 
-import models.ProductModel;
+import com.authAPI.AuthAPI.models.ProductModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
