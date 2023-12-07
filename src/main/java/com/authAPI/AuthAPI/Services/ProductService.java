@@ -1,9 +1,10 @@
 package com.authAPI.AuthAPI.Services;
 
 import com.authAPI.AuthAPI.models.ProductModel;
+import com.authAPI.AuthAPI.repositories.ProductRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.authAPI.AuthAPI.repositories.ProductRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +22,11 @@ public class ProductService {
 
     public Optional<ProductModel> getOneProduct(UUID id){
         return productRepository.findById(id);
+    }
+
+    @Transactional
+    public void delete(UUID id){
+        productRepository.deleteById(id);
     }
 
 }
