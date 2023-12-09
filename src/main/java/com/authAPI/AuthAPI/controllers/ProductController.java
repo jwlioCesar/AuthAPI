@@ -1,6 +1,8 @@
 package com.authAPI.AuthAPI.controllers;
 
 import com.authAPI.AuthAPI.Services.ProductService;
+import com.authAPI.AuthAPI.dto.request.ProductRequestRegisterDTO;
+import com.authAPI.AuthAPI.dto.response.ProductResponseRegisterDTO;
 import com.authAPI.AuthAPI.models.ProductModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(value = "/product")
+@RequestMapping(path = "/product")
 public class ProductController {
 
     @Autowired
@@ -42,16 +44,15 @@ public class ProductController {
     public ResponseEntity<Object> deleteProduct(@PathVariable UUID id){
         if (productService.getOneProduct(id).isPresent()){
             productService.delete(id);
-            return ResponseEntity.status(HttpStatus.OK).body("produto deletado com sucesso");
+            return ResponseEntity.status(HttpStatus.OK).body("produto deletado com sucesso!");
         }else{
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("produto com id '"+id+"' não cadastrado");
         }
     }
 
     @PostMapping
-    public ResponseEntity<Object> addProduct(){
-
+    public ResponseEntity<ProductResponseRegisterDTO> addProduct(@RequestBody ProductRequestRegisterDTO request){
+        return ResponseEntity.status(HttpStatus.OK).body(productService.addProduct(request));
     }
-
 
 }

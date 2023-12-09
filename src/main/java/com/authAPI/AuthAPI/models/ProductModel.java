@@ -17,8 +17,7 @@ public class ProductModel {
     public ProductModel() {
     }
 
-    public ProductModel(UUID id, String name, String price) {
-        this.id = id;
+    public ProductModel(String name, String price) {
         this.name = name;
         this.price = price;
     }
