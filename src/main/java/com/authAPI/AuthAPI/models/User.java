@@ -20,11 +20,16 @@ public class User implements UserDetails {
     private String username;
     private String password;
 
-    private List<Role> role = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(name = "tb_role_user",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private List<Role> roles = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return role;
+        return roles;
     }
 
     @Override
