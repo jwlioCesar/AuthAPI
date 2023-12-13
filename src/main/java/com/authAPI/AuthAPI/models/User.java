@@ -20,7 +20,6 @@ public class User implements UserDetails {
     private String username;
     private String password;
 
-
     @ManyToMany
     @JoinTable(name = "tb_role_user",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
