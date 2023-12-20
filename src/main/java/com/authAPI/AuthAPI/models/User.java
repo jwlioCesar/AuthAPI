@@ -3,9 +3,9 @@ package com.authAPI.AuthAPI.models;
 import com.authAPI.AuthAPI.enums.RoleName;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -20,15 +20,34 @@ public class User implements UserDetails {
     private String username;
     private String password;
 
-    @ManyToMany
-    @JoinTable(name = "tb_role_user",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    private List<Role> roles = new ArrayList<>();
+    @Enumerated(EnumType.STRING)
+    private final RoleName role;
+
+//    @ManyToMany
+//    @JoinTable(name = "tb_role_user",
+//            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+//            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+//    private List<Role> roles = new ArrayList<>();
+
+    public RoleName getRole() {
+        return role;
+    }
+
+    public User(String username, String password, RoleName role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
+
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        if (this.role == RoleName.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+//        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+//    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles;
+        return List.of(new SimpleGrantedAuthority(role.getRole()));
     }
 
     @Override
